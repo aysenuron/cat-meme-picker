@@ -6,7 +6,9 @@ function getEmotionsArray(cats){
     const emotionsArray = []
     for (let cat of cats){
         for (let emotion of cat.emotionTags){
-            emotionsArray.push(emotion);
+            if (!emotionsArray.includes(emotion)) {
+                emotionsArray.push(emotion);
+            } 
         }
     }
     return emotionsArray;
@@ -28,8 +30,15 @@ function renderEmotionsRadios(cats){
     emotionRadios.innerHTML = radioItems;
 }
 
-renderEmotionsRadios(catsData)
+function highlightCheckedOption(e) {
+    const allItems = document.querySelectorAll(".radio");
+    for (let item of allItems) {
+        item.classList.remove("highlight")
+    }
+    const selectedRadio = document.getElementById(e.target.id);
+    selectedRadio.parentElement.classList.add("highlight");
+}
 
+renderEmotionsRadios(catsData);
 
-
-
+emotionRadios.addEventListener("change", highlightCheckedOption);
